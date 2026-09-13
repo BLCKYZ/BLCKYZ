@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>BLCKYZ - Administration</title><link rel="stylesheet" href="styles.css"><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="supabase.js"></script>
+</head>
+<body>
+
+<nav id="main-nav">
+    <ul>
+        <li>
+            <a href="index.html">BLCKYZ</a>
+            <a class="account-link" href="compte.html">Compte</a>
+        </li>
+    </ul>
+</nav>
+<nav id="secondary-nav">
+    <ul>
+        <li><a href="annonce.html">Annonces</a></li>
+        <li><a href="equipe.html">Équipes</a></li>
+        <li><a href="billetterie.html">Billetterie</a></li>
+        <li><a href="propos.html">Partenaires</a></li>
+        <li><a href="support.html">Support</a></li>
+    </ul>
+</nav>
+
+<main class="page">
+<h1>Panel administrateur</h1>
+<div class="container">
+<div class="card admin"><h2>Utilisateurs</h2><p>Activer, désactiver ou supprimer un compte.</p><button class="button">Gérer</button></div>
+<div class="card admin"><h2>Annonces</h2><p>Ajouter, modifier ou supprimer une nouveauté.</p><button class="button">Gérer</button></div>
+<div class="card admin"><h2>Matchs</h2><p>Gérer les dates et les rencontres.</p><button class="button">Gérer</button></div>
+<div class="card admin"><h2>Équipes</h2><p>Gérer joueurs et staff.</p><button class="button">Gérer</button></div>
+<div class="card admin"><h2>Billetterie</h2><p>Gérer billets et coupons.</p><button class="button">Gérer</button></div>
+<div class="card admin"><h2>Partenaires</h2><p>Ajouter ou retirer un sponsor.</p><button class="button">Gérer</button></div>
+</div>
+<p style="margin-top:25px;color:#aaa;">Cette interface est le squelette du panel. Les actions seront reliées directement à Supabase.</p>
+</main>
+</body>
+</html>

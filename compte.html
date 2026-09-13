@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BLCKYZ - Compte</title>
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="supabase.js"></script>
+</head>
+<body>
+<nav id="main-nav"><ul><li><a href="index.html">BLCKYZ</a><a class="account-link" href="compte.html">Compte</a></li></ul></nav>
+<nav id="secondary-nav"><ul>
+<li><a href="annonce.html">Annonces</a></li><li><a href="equipe.html">Équipes</a></li>
+<li><a href="billetterie.html">Billetterie</a></li><li><a href="propos.html">Partenaires</a></li><li><a href="support.html">Support</a></li>
+</ul></nav>
+
+<main class="page">
+<h1>Compte</h1>
+<div id="configuration" class="card" style="display:none;">
+<h2>Supabase n'est pas configuré</h2>
+<p>Ouvrez <strong>supabase-config.js</strong> et renseignez l'URL et la clé publishable de votre projet Supabase.</p>
+</div>
+
+<div class="container" id="accountForms">
+<section class="card">
+<h2>Connexion</h2>
+<form id="loginForm" class="form">
+<label>Email</label><input id="loginEmail" type="email" required>
+<label>Mot de passe</label><input id="loginPassword" type="password" required>
+<button class="button" type="submit">Se connecter</button>
+<p id="loginMessage"></p>
+</form>
+</section>
+
+<section class="card">
+<h2>Créer un compte</h2>
+<form id="signupForm" class="form">
+<label>Nom d'utilisateur</label><input id="username" type="text" required>
+<label>Email</label><input id="signupEmail" type="email" required>
+<label>Mot de passe</label><input id="signupPassword" type="password" minlength="6" required>
+<label>Type de compte</label>
+<select id="role">
+<option value="joueur">Joueur</option>
+<option value="staff">Staff</option>
+<option value="sponsor">Sponsor</option>
+<option value="invite">Invité</option>
+</select>
+<label>Établissement</label><input id="establishment" type="text">
+<button class="button" type="submit">Créer mon compte</button>
+<p id="signupMessage"></p>
+</form>
+</section>
+</div>
+
+<section id="loggedAccount" class="card" style="display:none;">
+<h2>Mon compte</h2>
+<p id="userInfo"></p>
+<button id="logoutButton" class="button">Se déconnecter</button>
+</section>
+</main>
+
+<script>
+document.addEventListener("DOMContentLoaded", async function () {
+    if (!window.blckyzSupabase) {
+        document.getElementById("configuration").style.display = "block";
+        return;
+    }
+
+    var loginForm = document.getElementById("loginForm");
+    var signupForm = document.getElementById("signupForm");
+    var forms = document.getElementById("accountForms");
+    var logged = document.getElementById("loggedAccount");
+    var userInfo = document.getElementById("userInfo");
+
+    async function afficherCompte() {
+        var resultat = await blckyzSupabase.auth.getUser();
+        if (resultat.data && resultat.data.user) {
+            forms.style.display = "none";
+            logged.style.display = "block";
+            userInfo.textContent = "Connecté avec : " + resultat.data.user.email;
+        } else {
+            forms.style.display = "grid";
+            logged.style.display = "none";
+        }
+    }
+
+    loginForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        var resultat = await blckyzSupabase.auth.signInWithPassword({
+            email: document.getElementById("loginEmail").value,
+            password: document.getElementById("loginPassword").value
+        });
+
+        if (resultat.error) {
+            afficherMessage("loginMessage", resultat.error.message, true);
+        } else {
+            afficherMessage("loginMessage", "Connexion réussie.", false);
+            await afficherCompte();
+        }
+    });
+
+    signupForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        var email = document.getElementById("signupEmail").value;
+        var password = document.getElementById("signupPassword").value;
+        var username = document.getElementById("username").value;
+        var role = document.getElementById("role").value;
+        var establishment = document.getElementById("establishment").value;
+
+        var resultat = await blckyzSupabase.auth.signUp({
+            email: email,
+            password: password,
+            options: {
+                data: {
+                    username: username,
+                    role: role,
+                    establishment: establishment
+                }
+            }
+        });
+
+        if (resultat.error) {
+            afficherMessage("signupMessage", resultat.error.message, true);
+        } else {
+            afficherMessage("signupMessage", "Compte créé. Vérifiez votre email si la confirmation est activée dans Supabase.", false);
+            signupForm.reset();
+        }
+    });
+
+    document.getElementById("logoutButton").addEventListener("click", async function () {
+        await blckyzSupabase.auth.signOut();
+        await afficherCompte();
+    });
+
+    blckyzSupabase.auth.onAuthStateChange(function () {
+        afficherCompte();
+    });
+
+    await afficherCompte();
+});
+</script>
+</body>
+</html>

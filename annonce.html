@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>BLCKYZ - Annonces</title><link rel="stylesheet" href="styles.css"><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="supabase.js"></script>
+</head>
+<body>
+
+<nav id="main-nav">
+    <ul>
+        <li>
+            <a href="index.html">BLCKYZ</a>
+            <a class="account-link" href="compte.html">Compte</a>
+        </li>
+    </ul>
+</nav>
+<nav id="secondary-nav">
+    <ul>
+        <li><a href="annonce.html">Annonces</a></li>
+        <li><a href="equipe.html">Équipes</a></li>
+        <li><a href="billetterie.html">Billetterie</a></li>
+        <li><a href="propos.html">Partenaires</a></li>
+        <li><a href="support.html">Support</a></li>
+    </ul>
+</nav>
+
+<main class="page">
+<h1>Annonces</h1>
+<div class="search"><input id="searchInput" onkeyup="rechercher()" placeholder="Rechercher une annonce..."></div>
+<div class="container">
+<article class="card search-card"><h2>Ouverture de la billetterie</h2><small>01/10/2026</small><p>Les billets de la compétition sont disponibles.</p></article>
+<article class="card search-card"><h2>Calendrier des matchs</h2><small>03/10/2026</small><p>Les dates et horaires des rencontres sont annoncés.</p></article>
+<article class="card search-card"><h2>Informations importantes</h2><small>05/10/2026</small><p>Les participants doivent se présenter avant le début de leur match.</p></article>
+</div>
+</main>
+<script src="script.js"></script>
+</body>
+</html>
