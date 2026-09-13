@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         if (resultat.error) {
             afficherMessage("signupMessage", resultat.error.message, true);
         } else {
-            afficherMessage("signupMessage", "Compte créé. Vérifiez votre email si la confirmation est activée dans Supabase.", false);
+            afficherMessage("signupMessage", "Compte créé avec succès ! Un e-mail de confirmation a été envoyé à " + email + ". Vérifiez votre boîte mail et cliquez sur le lien de validation pour activer votre compte.", false);
             signupForm.reset();
         }
     });
